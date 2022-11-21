@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 40),
               width: double.maxFinite,
-              height: 200,
+              // height: 400,
               decoration: BoxDecoration(
                   color: const Color(0xff333333),
                   borderRadius: BorderRadius.circular(15)),
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Icon(
                               Icons.cake,
-                              size: 75,
+                              size: 55,
                               color: Color(0xffCDDC39),
                             ),
                             Text(
@@ -198,6 +198,170 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ],
+                  ),
+                  Container(
+                    height: 1,
+                    width: double.maxFinite,
+                    color: const Color(0xff999999),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    child: Text(
+                      "SUMMARY",
+                      style: TextStyle(
+                          color: Color(0xffcddc39),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: const [
+                            Text(
+                              "YEARS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "21",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 28),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: const [
+                            Text(
+                              "MONTHS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "261",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 28),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: const [
+                            Text(
+                              "WEEKS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "1137",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 28),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: const [
+                            Text(
+                              "DAYS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "7693",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 28),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: const [
+                            Text(
+                              "HOURS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "191112",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 25),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: const [
+                            Text(
+                              "MINUTES",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "11466720",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
                   )
                 ],
               ),
