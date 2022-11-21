@@ -1,4 +1,6 @@
+import 'package:age/age.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_age_calculator_1/services/age_calculator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,6 +10,56 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AgeDuration? _ageDuration;
+  DateTime todayDate = DateTime.now();
+  DateTime dob = DateTime(2000, 1, 1);
+  List<String> months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  Future<void> _selectTodayDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: todayDate,
+        firstDate: dob,
+        lastDate: DateTime(2101));
+    if (picked != null && picked != todayDate) {
+      setState(() {
+        todayDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectDobDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: todayDate,
+        firstDate: DateTime(1900),
+        lastDate: todayDate);
+    if (picked != null && picked != dob) {
+      setState(() {
+        dob = picked;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _ageDuration = AgeCalculator().calculateAge(todayDate, dob);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,21 +97,26 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20),
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        "20 OCTOBER 2022",
-                        style: TextStyle(
+                        "${todayDate.day} ${months[todayDate.month]} ${todayDate.year}",
+                        style: const TextStyle(
                           color: Color(0xffCDDC39),
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Icon(
-                        Icons.calendar_today,
-                        color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          _selectTodayDate(context);
+                        },
+                        child: const Icon(
+                          Icons.calendar_today,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   )
@@ -82,21 +139,26 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20),
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        "1 JANUARY 1999",
-                        style: TextStyle(
+                        "${dob.day} ${months[dob.month]} ${dob.year}",
+                        style: const TextStyle(
                           color: Color(0xffCDDC39),
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Icon(
-                        Icons.calendar_today,
-                        color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          _selectDobDate(context);
+                        },
+                        child: const Icon(
+                          Icons.calendar_today,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   )
@@ -130,15 +192,15 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
-                              children: const [
+                              children: [
                                 Text(
-                                  "21",
-                                  style: TextStyle(
+                                  "${_ageDuration?.years}",
+                                  style: const TextStyle(
                                       color: Color(0xffCDDC39),
                                       fontWeight: FontWeight.w700,
                                       fontSize: 76),
                                 ),
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.only(bottom: 13.0),
                                   child: Text(
                                     "YEARS",
@@ -147,9 +209,9 @@ class _HomePageState extends State<HomePage> {
                                 )
                               ],
                             ),
-                            const Text(
-                              "9 months | 19 days",
-                              style: TextStyle(
+                            Text(
+                              "${_ageDuration?.months} months | ${_ageDuration?.days} days",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 18),
@@ -222,17 +284,17 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Column(
                           children: const [
-                            Text(
+                            const Text(
                               "YEARS",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
-                            Text(
+                            const Text(
                               "21",
                               style: TextStyle(
                                   color: Colors.white,
