@@ -11,9 +11,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AgeDuration? _ageDuration;
+  AgeDuration? _nextBirthday;
+  int? _nextBirthdayWeekday;
   DateTime todayDate = DateTime.now();
   DateTime dob = DateTime(2000, 1, 1);
-  List<String> months = [
+  final List<String> months = [
     "January",
     "February",
     "March",
@@ -27,6 +29,16 @@ class _HomePageState extends State<HomePage> {
     "November",
     "December"
   ];
+  final List<String> _weeks = [
+    "Weeks",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
   Future<void> _selectTodayDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -37,6 +49,10 @@ class _HomePageState extends State<HomePage> {
     if (picked != null && picked != todayDate) {
       setState(() {
         todayDate = picked;
+        initState();//instead of that you may write the below
+        // _ageDuration = AgeCalculator().calculateAge(todayDate, dob);
+        // _nextBirthday = AgeCalculator().calculateNextBirthday(todayDate, dob);
+        // _nextBirthdayWeekday = AgeCalculator().nextBirthday(todayDate, dob);
       });
     }
   }
@@ -50,6 +66,8 @@ class _HomePageState extends State<HomePage> {
     if (picked != null && picked != dob) {
       setState(() {
         dob = picked;
+        initState();
+
       });
     }
   }
@@ -58,6 +76,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _ageDuration = AgeCalculator().calculateAge(todayDate, dob);
+    _nextBirthday = AgeCalculator().calculateNextBirthday(todayDate, dob);
+    _nextBirthdayWeekday = AgeCalculator().nextBirthday(todayDate, dob);
   }
 
   @override
@@ -229,29 +249,29 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "NEXT BIRTHDAY",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.cake,
                               size: 55,
                               color: Color(0xffCDDC39),
                             ),
                             Text(
-                              "Friday",
-                              style: TextStyle(
+                              _weeks[_nextBirthdayWeekday ?? 0],
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18),
                             ),
                             Text(
-                              "2 months | 12 days",
-                              style: TextStyle(
+                              "${_nextBirthday?.months} months | ${_nextBirthday?.days} days",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 18),
@@ -283,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          children: const [
+                          children: [
                             const Text(
                               "YEARS",
                               style: TextStyle(
@@ -294,9 +314,9 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               height: 5,
                             ),
-                            const Text(
-                              "21",
-                              style: TextStyle(
+                            Text(
+                              "${_ageDuration?.years}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 28),
@@ -304,20 +324,20 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "MONTHS",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              "261",
-                              style: TextStyle(
+                              "${(((_ageDuration?.years ?? 1) * 12) + (_ageDuration?.months ?? 1))}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 28),
@@ -325,20 +345,20 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "WEEKS",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              "1137",
-                              style: TextStyle(
+                              "${(todayDate.difference(dob).inDays / 7).floor()}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 28),
@@ -357,20 +377,20 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "DAYS",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              "7693",
-                              style: TextStyle(
+                              "${todayDate.difference(dob).inDays}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 28),
@@ -378,20 +398,20 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "HOURS",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              "191112",
-                              style: TextStyle(
+                              "${todayDate.difference(dob).inHours}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 25),
@@ -399,20 +419,20 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         Column(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "MINUTES",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              "11466720",
-                              style: TextStyle(
+                              "${todayDate.difference(dob).inMinutes}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 18),
